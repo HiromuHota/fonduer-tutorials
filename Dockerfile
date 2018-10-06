@@ -14,6 +14,7 @@ RUN pip install -r requirements.txt
 
 RUN python -m spacy download en
 RUN apt-get install postgresql-client -y
+RUN conda install -y -c conda-forge ipywidgets
 
 USER $NB_UID
 
