@@ -16,6 +16,10 @@ RUN python -m spacy download en
 RUN apt-get install postgresql-client -y
 RUN conda install -y -c conda-forge ipywidgets
 
+RUN apt-get install -y libmagickwand-dev
+RUN apt-get install -y ghostscript
+RUN rm /etc/ImageMagick-6/policy.xml
+
 USER $NB_UID
 
 COPY hardware hardware
