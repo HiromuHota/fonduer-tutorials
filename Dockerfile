@@ -22,6 +22,6 @@ RUN rm /etc/ImageMagick-6/policy.xml
 
 USER $NB_UID
 
-COPY hardware hardware
-COPY hardware_image hardware_image
-COPY intro intro
+COPY --chown=jovyan:users hardware hardware
+COPY --chown=jovyan:users hardware_image hardware_image
+COPY --chown=jovyan:users intro intro
