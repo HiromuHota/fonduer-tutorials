@@ -2,23 +2,22 @@ FROM jupyter/minimal-notebook
 LABEL maintainer="Hiromu Hota <hiromu.hota@hal.hitachi.com>"
 USER root
 
-RUN apt-get update && apt-get install -yq \
+RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libxslt-dev \
     python-matplotlib \
-    poppler-utils
+    poppler-utils \
+    postgresql-client \
+    libmagickwand-dev \
+    ghostscript \
+ && rm -rf /var/lib/{apt,dpkg,cache,log}/
+RUN rm /etc/ImageMagick-6/policy.xml
 
 COPY requirements.txt requirements.txt
-
 RUN pip install -r requirements.txt
 
 RUN python -m spacy download en
-RUN apt-get install postgresql-client -y
 RUN conda install -y -c conda-forge ipywidgets
-
-RUN apt-get install -y libmagickwand-dev
-RUN apt-get install -y ghostscript
-RUN rm /etc/ImageMagick-6/policy.xml
 
 USER $NB_UID
 
