@@ -13,8 +13,11 @@ RUN apt-get update && apt-get install -y \
  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 RUN rm /etc/ImageMagick-6/policy.xml
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install torch==0.4.1
+RUN pip install \
+    fonduer==0.3.4 \
+    matplotlib \
+    snorkel-metal==0.2.4
 
 RUN python -m spacy download en
 RUN conda install -y -c conda-forge ipywidgets
