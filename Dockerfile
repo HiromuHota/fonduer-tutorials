@@ -28,3 +28,4 @@ COPY --chown=jovyan:users hardware hardware
 COPY --chown=jovyan:users hardware_image hardware_image
 COPY --chown=jovyan:users intro intro
 RUN sed -i -e 's/localhost/postgres/g' */*.ipynb
+RUN cd hardware_image && /bin/bash download_data.sh
