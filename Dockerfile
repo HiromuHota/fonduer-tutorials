@@ -36,5 +36,6 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/
 RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-12 \
+    postgresql-client-12 \
  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 USER user
