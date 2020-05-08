@@ -21,6 +21,7 @@ jobs:
         find . -name "*.ipynb" -not -path '*/\.*' | xargs jupyter nbconvert --to script
         sed -i -e "s/get_ipython().run_line_magic('matplotlib', 'inline')/import matplotlib\nmatplotlib.use('Agg')/" */*.py
         sed -i -e 's/n_epochs=[0-9]*/n_epochs=5/g' */*.py
+        sed -i -e 's/"n_epochs": [0-9]*/"n_epochs": 5/g' */*.py
 
         cd ~/hardware
         ./download_data.sh
