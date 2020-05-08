@@ -5,8 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to run all notebooks
     steps:
-    ‐ name: Build a Docker image
-      uses: docker/build-action@v1
+    - uses: actions/checkout@v2
+    - name: Build a Docker image
+      uses: actions/setup-python@v1
       with:
         repository: hiromuhota/fonduer-tutorials
         tags: 0.8.2
@@ -17,4 +18,3 @@ jobs:
         cat << EOF | docker exec -i fonduer-tutorials_jupyter_1 /bin/bash -
         pip list
         EOF
-
