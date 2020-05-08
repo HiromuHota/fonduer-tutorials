@@ -11,6 +11,7 @@ jobs:
       with:
         repository: hiromuhota/fonduer-tutorials
         tags: 0.8.2
+        push: false
     - name: Start a docker compose
       run: docker-compose up -d
     - name: Run a command inside a container
