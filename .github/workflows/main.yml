@@ -6,7 +6,6 @@ jobs:
     name: A job to run all notebooks
     steps:
     ‐ name: Build a Docker image
-      id: build
       uses: docker/build-action@v1
       with:
         repository: hiromuhota/fonduer-tutorials
