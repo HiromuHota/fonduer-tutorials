@@ -1,4 +1,4 @@
-FROM hiromuhota/fonduer
+FROM hiromuhota/fonduer:0.7.1
 LABEL maintainer="Hiromu Hota <hiromu.hota@hal.hitachi.com>"
 
 USER root
