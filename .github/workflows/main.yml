@@ -1,0 +1,21 @@
+on: [push]
+
+jobs:
+  fonduer-tutorials:
+    runs-on: ubuntu-latest
+    name: A job to run all notebooks
+    steps:
+    ‐ name: Build a Docker image
+      id: build
+      uses: docker/build-action@v1
+      with:
+        repository: hiromuhota/fonduer-tutorials
+        tags: 0.8.2
+    - name: Start a docker compose
+      run: docker-compose up -d
+    - name: Run a command inside a container
+      run: |
+        cat << EOF | docker exec -i fonduer-tutorials_jupyter_1 /bin/bash -
+        pip list
+        EOF
+

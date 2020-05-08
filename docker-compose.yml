@@ -2,7 +2,7 @@ version: "3"
 services:
 
   jupyter:
-    image: hiromuhota/fonduer-tutorials
+    image: hiromuhota/fonduer-tutorials:0.8.2
     ports:
       - "8888:8888"
     links:
