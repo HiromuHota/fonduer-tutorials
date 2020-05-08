@@ -16,7 +16,7 @@ RUN chmod +x /usr/bin/tini
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 EXPOSE 8888
-CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0"]
+# CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0"]
 
 USER user
 RUN pip install --upgrade pip \
@@ -38,4 +38,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-12 \
     postgresql-client-12 \
  && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+COPY start.sh /
+RUN chmod +x /start.sh
+CMD ["/start.sh"]
+
 USER user
+
