@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build a Docker image
-      uses: docker/build-action@v1
+      uses: docker/build-push-action@v1
       with:
         repository: hiromuhota/fonduer-tutorials
         tags: 0.8.2
