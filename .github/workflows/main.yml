@@ -10,7 +10,7 @@ jobs:
       uses: docker/build-push-action@v1
       with:
         repository: hiromuhota/fonduer-tutorials
-        tags: 0.8.2
+        tags: latest
         push: false
     - name: Start a docker compose
       run: docker-compose up -d
