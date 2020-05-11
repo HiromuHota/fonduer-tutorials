@@ -49,6 +49,8 @@ RUN sed -i '/^host    all             all             127.0.0.1\/32            m
 
 USER root
 
+ENV NB_PREFIX /
+
 COPY start.sh /
 RUN chmod +x /start.sh
 CMD ["/start.sh"]
