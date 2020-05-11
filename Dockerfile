@@ -39,9 +39,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-client-12 \
  && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+USER postgres
+
+# Create root role
+RUN /etc/init.d/postgresql start &&\
+    psql -c "CREATE USER root WITH SUPERUSER;"
+
+RUN sed -i '/^host    all             all             127.0.0.1\/32            md5/ s/md5/trust/' /etc/postgresql/12/main/pg_hba.conf
+
+USER root
+
 COPY start.sh /
 RUN chmod +x /start.sh
 CMD ["/start.sh"]
-
-USER user
 
