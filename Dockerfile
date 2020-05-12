@@ -52,12 +52,6 @@ RUN cd intro && /bin/bash download_data.sh
 COPY --chown=user:user wiki wiki
 RUN cd wiki && /bin/bash download_data.sh
 
-# Specify the hostname of postgres b/c it's not local
-RUN sed -i -e 's/localhost/postgres/g' */*.ipynb
-RUN sed -i -e 's/dropdb/dropdb -h postgres/g' */*.ipynb
-RUN sed -i -e 's/createdb/createdb -h postgres/g' */*.ipynb
-RUN sed -i -e 's/psql/psql -h postgres/g' */*.ipynb
-
 USER root
 
 ENV NB_PREFIX /
