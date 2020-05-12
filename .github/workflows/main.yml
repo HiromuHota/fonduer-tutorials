@@ -12,11 +12,11 @@ jobs:
         repository: hiromuhota/fonduer-tutorials
         tags: latest
         push: false
-    - name: Start a docker compose
-      run: docker-compose up -d
+    - name: Start a docker
+      run: docker run --name fonduer-tutorials hiromuhota/fonduer-tutorials
     - name: Run a command inside a container
       run: |
-        docker exec -i fonduer-tutorials_jupyter_1 /bin/bash -<<EOF
+        docker exec -i fonduer-tutorials /bin/bash -<<EOF
           # Convert ipynb to py
           find . -name "*.ipynb" -not -path '*/\.*' | xargs jupyter nbconvert --to script
           sed -i -e "s/get_ipython().run_line_magic('matplotlib', 'inline')/import matplotlib\nmatplotlib.use('Agg')/" */*.py

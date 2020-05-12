@@ -27,7 +27,7 @@ additional to text.
 ## Quick Start
 
 ```bash
-docker-compose up
+docker run -p 8888:8888 hiromuhota/fonduer-tutorials
 ```
 
 ## Installation
