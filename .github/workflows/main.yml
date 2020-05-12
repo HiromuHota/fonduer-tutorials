@@ -23,19 +23,24 @@ jobs:
           sed -i -e 's/n_epochs=[0-9]*/n_epochs=5/g' */*.py
           sed -i -e 's/"n_epochs": [0-9]*/"n_epochs": 5/g' */*.py
 
-          cd ~/hardware
+          createdb stg_temp_max
+          cd /home/user/hardware
           ./download_data.sh
           ipython max_storage_temp_tutorial.py
 
-          cd ~/wiki
+          createdb stg_temp_max_figure
+          cd /home/user/wiki
           ./download_data.sh
           ipython president_place_of_birth_tutorial.py
 
-          cd ~/hardware_image
+          cd /home/user/hardware_image
           ./download_data.sh
           ipython transistor_image_tutorial.py
 
-          cd ~/intro
+          createdb intro_candidates
+          createdb intro_data_model
+          createdb intro_supervision
+          cd /home/user/intro
           ./download_data.sh
           ipython Intro_Candidates.py
           ipython Intro_Data_Model.py
