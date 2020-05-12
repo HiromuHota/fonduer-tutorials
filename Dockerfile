@@ -29,6 +29,18 @@ RUN pip install --upgrade pip \
 # Copy notebooks and download data
 COPY --chown=user:user hardware hardware
 RUN cd hardware && /bin/bash download_data.sh
+COPY --chown=user:user hardware_image hardware_image
+RUN cd hardware_image && /bin/bash download_data.sh
+COPY --chown=user:user intro intro
+RUN cd intro && /bin/bash download_data.sh
+COPY --chown=user:user wiki wiki
+RUN cd wiki && /bin/bash download_data.sh
+
+# Specify the hostname of postgres b/c it's not local
+RUN sed -i -e 's/localhost/postgres/g' */*.ipynb
+RUN sed -i -e 's/dropdb/dropdb -h postgres/g' */*.ipynb
+RUN sed -i -e 's/createdb/createdb -h postgres/g' */*.ipynb
+RUN sed -i -e 's/psql/psql -h postgres/g' */*.ipynb
 
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends gnupg2
