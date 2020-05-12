@@ -13,7 +13,7 @@ jobs:
         tags: latest
         push: false
     - name: Start a docker
-      run: docker run --name fonduer-tutorials hiromuhota/fonduer-tutorials
+      run: docker run -d --name fonduer-tutorials hiromuhota/fonduer-tutorials
     - name: Run a command inside a container
       run: |
         docker exec -i fonduer-tutorials /bin/bash -<<EOF
