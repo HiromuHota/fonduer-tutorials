@@ -5,7 +5,23 @@ USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ghostscript \
     curl \
- && rm -rf /var/lib/{apt,dpkg,cache,log}/
+    # gnupg2 is required by apt-key
+    gnupg2 \
+ # Install postgres
+ && echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+ && curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+ && apt-get update && apt-get install -y --no-install-recommends \
+    postgresql-12 \
+    postgresql-client-12 \
+ && rm -rf /var/lib/apt/lists/*
+
+USER postgres
+RUN sed -i '/^host    all             all             127.0.0.1\/32            md5/ s/md5/trust/' /etc/postgresql/12/main/pg_hba.conf
+# Create root role
+RUN /etc/init.d/postgresql start &&\
+    psql -c "CREATE USER root WITH SUPERUSER;"
+
+USER root
 
 # https://jupyter-notebook.readthedocs.io/en/stable/public_server.html#docker-cmd
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents
@@ -41,23 +57,6 @@ RUN sed -i -e 's/localhost/postgres/g' */*.ipynb
 RUN sed -i -e 's/dropdb/dropdb -h postgres/g' */*.ipynb
 RUN sed -i -e 's/createdb/createdb -h postgres/g' */*.ipynb
 RUN sed -i -e 's/psql/psql -h postgres/g' */*.ipynb
-
-USER root
-RUN apt-get update && apt-get install -y --no-install-recommends gnupg2
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    postgresql-12 \
-    postgresql-client-12 \
- && rm -rf /var/lib/{apt,dpkg,cache,log}/
-
-USER postgres
-
-# Create root role
-RUN /etc/init.d/postgresql start &&\
-    psql -c "CREATE USER root WITH SUPERUSER;"
-
-RUN sed -i '/^host    all             all             127.0.0.1\/32            md5/ s/md5/trust/' /etc/postgresql/12/main/pg_hba.conf
 
 USER root
 
