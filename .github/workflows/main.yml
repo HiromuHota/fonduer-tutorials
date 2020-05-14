@@ -20,22 +20,26 @@ jobs:
           # Convert ipynb to py
           find . -name "*.ipynb" -not -path '*/\.*' | xargs jupyter nbconvert --to script
           sed -i -e "s/get_ipython().run_line_magic('matplotlib', 'inline')/import matplotlib\nmatplotlib.use('Agg')/" */*.py
+          # Decrease n_epochs to finish quicker
           sed -i -e 's/n_epochs=[0-9]*/n_epochs=5/g' */*.py
           sed -i -e 's/"n_epochs": [0-9]*/"n_epochs": 5/g' */*.py
-          createdb stg_temp_max
+
+          # hardware
           cd /home/user/hardware
           ./download_data.sh
           ipython max_storage_temp_tutorial.py
-          createdb stg_temp_max_figure
-          cd /home/user/wiki
-          ./download_data.sh
-          ipython president_place_of_birth_tutorial.py
+
+          # hardware_image
           cd /home/user/hardware_image
           ./download_data.sh
           ipython transistor_image_tutorial.py
-          createdb intro_candidates
-          createdb intro_data_model
-          createdb intro_supervision
+
+          # wiki
+          cd /home/user/wiki
+          ./download_data.sh
+          ipython president_place_of_birth_tutorial.py
+
+          # intro
           cd /home/user/intro
           ./download_data.sh
           ipython Intro_Candidates.py
