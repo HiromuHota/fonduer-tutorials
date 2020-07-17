@@ -14,6 +14,11 @@ jobs:
         push: false
     - name: Start a docker compose
       run: docker-compose up -d
+    - name: Upgrade fonduer
+      run: |
+        docker-compose exec -u 0 -T jupyter apt-get update
+        docker-compose exec -u 0 -T jupyter apt-get install -y git
+        docker-compose exec -T jupyter pip install --upgrade git+https://github.com/HiromuHota/fonduer.git@2a49291003c2826835b0b900425d7663f0ecc202
     - name: Run a command inside a container
       run: |
         cat << EOF | docker exec -i fonduer-tutorials_jupyter_1 /bin/bash -
