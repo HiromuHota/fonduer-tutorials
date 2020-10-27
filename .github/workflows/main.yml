@@ -14,9 +14,14 @@ jobs:
         push: false
     - name: Start a docker compose
       run: docker-compose up -d
+    - name: Update fonduer to the latest commit
+      run: |
+        docker-compose exec -u 0 jupyter apt-get update
+        docker-compose exec -u 0 jupyter apt-get install -y git
+        docker-compose exec jupyter pip install --upgrade git+https://github.com/HazyResearch/fonduer.git
     - name: Run a command inside a container
       run: |
-        cat << EOF | docker exec -i fonduer-tutorials_jupyter_1 /bin/bash -
+        cat << EOF | docker-compose exec jupyter /bin/bash -
         # Convert ipynb to py
         find . -name "*.ipynb" -not -path '*/\.*' | xargs jupyter nbconvert --to script
         sed -i -e "s/get_ipython().run_line_magic('matplotlib', 'inline')/import matplotlib\nmatplotlib.use('Agg')/" */*.py
